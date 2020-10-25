@@ -40,7 +40,7 @@ $(function(){
         $(".datetime").text(new Date().toISOString());
         $(".key").text(buf2hex(key).toUpperCase());
 
-        //  window.print();
+        window.print();
     });
 
 });
