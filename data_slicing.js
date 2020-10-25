@@ -8,7 +8,19 @@ const VOLUME_MAX = 400 - HEADER_LEN;
 const VOLUME_MIN = 100 - HEADER_LEN;
 const Nmax = 12;
 
-function slice_data(data){
+
+function encrypt(data){
+    const nonce = new Uint8Array(nacl.secretbox.nonceLength); // all zero
+    const key = nacl.randomBytes(nacl.secretbox.keyLength); // key always random
+    return { data: nacl.secretbox(data, nonce, key), key: key };
+}
+
+
+
+
+function slice_data(input){
+
+    var { data, key } = encrypt(input);
     
     var divlen, n;
     if(data.length < Nmax * VOLUME_MIN){
@@ -23,7 +35,7 @@ function slice_data(data){
         throw Error("File too large.");
     }
 
-    let hash = new BLAKE2s(8).update(data).digest();
+    let hash = nacl.hash(data).slice(0, 8);
 
     let i = 0, ret = [];
     let index = 0;
@@ -44,7 +56,7 @@ function slice_data(data){
         ret.push(slice);
     }
 
-    return ret;
+    return { slices: ret, key: key };
 
 }
 

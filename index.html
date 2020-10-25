@@ -5,7 +5,7 @@
 
         <script src="ext/jquery-3.5.1.min.js"></script>
         <script src="ext/qrcode.js"></script>
-        <script src="ext/blake2s.min.js"></script>
+        <script src="ext/nacl.min.js"></script>
         <script src="main.js" type="module"></script>
 
         <link rel="stylesheet" href="style.css" />
@@ -13,12 +13,16 @@
     <body>
         <table>
             <thead>
-                <tr><td width="20%">Filename:</td><td id="filename"></td></tr>
-                <tr><td width="20%">Date of print:</td><td></td></tr>
+                <tr><td width="20%">Filename:</td><td class="filename"></td></tr>
+                <tr><td width="20%">Date of print:</td><td class="datetime"></td></tr>
+                <tr><td width="20%">Decryption Key:</td><td class="key"></td></tr>
             </thead>
             <tbody>
                 <tr><td colspan="3" id="qrcodes"></td></tr>
             </tbody>
+            <tfoot>
+                <tr><td width="20%">Decryption Key:</td><td class="key"></td></tr>
+            </tfoot>
         </table>
     </body>
 </html>

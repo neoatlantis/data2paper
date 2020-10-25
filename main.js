@@ -1,7 +1,9 @@
 import { DropFileLoader } from "./fileloader.js";
 import { slice_data } from "./data_slicing.js";
 
-
+function buf2hex(buffer) { // buffer is an ArrayBuffer
+  return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+}
 
 
 function draw_code(data){
@@ -30,10 +32,13 @@ $(function(){
     loader.on("load", function(data, metadata){
         
         $("#qrcodes").empty();
-        $("#filename").text(metadata.name);
 
-        let slices = slice_data(data);
+        let { slices, key } = slice_data(data);
         slices.forEach((s) => draw_code(s));
+
+        $(".filename").text(metadata.name);
+        $(".datetime").text(new Date().toISOString());
+        $(".key").text(buf2hex(key).toUpperCase());
 
         //  window.print();
     });
