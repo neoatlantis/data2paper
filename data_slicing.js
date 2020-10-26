@@ -56,6 +56,7 @@ function slice_data(input){
         ret.push(slice);
     }
 
+    console.log(ret);
     return { slices: ret, key: key };
 
 }
